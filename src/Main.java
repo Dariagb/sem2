@@ -33,8 +33,8 @@ public class Main {
 
     /*инициализация игрового поля*/
     static void initialize() {
-        fieldSizeY = 3;
-        fieldSizeX = 3;
+        fieldSizeY = 5;
+        fieldSizeX = 5;
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -132,18 +132,64 @@ public class Main {
      * @param dot фишка игрока
      * @return признак победы
      */
-    static boolean checkWin(char dot) {
-        //Проверка по трем вертикалям
-        if (field[0][0] == dot && field[0][1] == dot && field[0][2] == dot) return true;
-        if (field[1][0] == dot && field[1][1] == dot && field[1][2] == dot) return true;
-        if (field[2][0] == dot && field[2][1] == dot && field[2][2] == dot) return true;
-//проверка по трем горизонталям
-        if (field[0][0] == dot && field[1][0] == dot && field[2][0] == dot) return true;
-        if (field[0][1] == dot && field[1][1] == dot && field[2][1] == dot) return true;
-        if (field[0][2] == dot && field[1][2] == dot && field[2][2] == dot) return true;
-//проверка по диагонали
-        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) return true;
-        if (field[0][2] == dot && field[1][1] == dot && field[2][0] == dot) return true;
+    //static boolean checkWin(char dot) {
+//        //Проверка по трем вертикалям
+//        if (field[0][0] == dot && field[0][1] == dot && field[0][2] == dot) return true;
+//        if (field[1][0] == dot && field[1][1] == dot && field[1][2] == dot) return true;
+//        if (field[2][0] == dot && field[2][1] == dot && field[2][2] == dot) return true;
+////проверка по трем горизонталям
+//        if (field[0][0] == dot && field[1][0] == dot && field[2][0] == dot) return true;
+//        if (field[0][1] == dot && field[1][1] == dot && field[2][1] == dot) return true;
+//        if (field[0][2] == dot && field[1][2] == dot && field[2][2] == dot) return true;
+////проверка по диагонали
+//        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) return true;
+//        if (field[0][2] == dot && field[1][1] == dot && field[2][0] == dot) return true;
+//        return false;
+   // }
+    static boolean checkLine(char dot) {
+        for (int y = 0; y < fieldSizeY; y++) {
+            if (field[y][0] == dot && field[y][1] == dot && field[y][2] == dot && field[y][3] == dot && field[y][4] == dot) {
+                return true;
+            }
+        }
         return false;
     }
+    static boolean checkColons(char dot) {
+        for (int x = 0; x < fieldSizeX; x++) {
+            if (field[0][x] == dot && field[1][x] == dot && field[2][x] == dot && field[3][x] == dot && field[4][x] == dot) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    static boolean checkDiagonals(char dot) {
+        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot && field[3][3] == dot && field[4][4] == dot) {
+            return true;
+        }
+
+        if (field[0][4] == dot && field[1][3] == dot && field[2][2] == dot && field[3][1] == dot && field[4][0] == dot) {
+            return true;
+        }
+
+        return false;
+    }
+    static boolean checkDiagonalsReverse(char dot) {
+        if (field[0][4] == dot && field[1][3] == dot && field[2][2] == dot && field[3][1] == dot && field[4][0] == dot) {
+            return true;
+        }
+
+        if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot && field[3][3] == dot && field[4][4] == dot) {
+            return true;
+        }
+
+        return false;
+    }
+
+    static boolean checkWin(char dot) {
+        return checkLine(dot) || checkColons(dot) || checkDiagonals(dot) || checkDiagonalsReverse(dot);
+    }
 }
+
+
